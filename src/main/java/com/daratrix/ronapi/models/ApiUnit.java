@@ -12,6 +12,7 @@ import com.daratrix.ronapi.models.interfaces.IOrder;
 import com.daratrix.ronapi.models.interfaces.IUnit;
 import com.daratrix.ronapi.models.interfaces.IWidget;
 import com.solegendary.reignofnether.ability.Ability;
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.building.BuildingServerEvents;
@@ -93,12 +94,12 @@ public class ApiUnit implements IUnit {
 
     @Override
     public Stream<Ability> getAbilities() {
-        return this.unit.getAbilities().stream();
+        return this.unit.getAbilities().get().stream();
     }
 
     @Override
     public <T extends Ability> T getAbility(Class<T> abiltiyClass) {
-        var abilities = this.unit.getAbilities();
+        var abilities = this.unit.getAbilities().get();
         for (var ability : abilities) {
             if (abiltiyClass.isInstance(ability)) {
                 return abiltiyClass.cast(ability);
@@ -106,6 +107,26 @@ public class ApiUnit implements IUnit {
         }
 
         return null;
+    }
+
+    @Override
+    public <T extends Ability> void setAbilityAutocast(Class<T> abilityClass, boolean on) {
+        getAbility(abilityClass).setAutocast(on, this.unit);
+    }
+
+    @Override
+    public <T extends Ability> boolean isAbilityAutocasting(Class<T> abilityClass) {
+        return getAbility(abilityClass).isAutocasting(this.unit);
+    }
+
+    @Override
+    public <T extends Ability> boolean isAbilityOffCooldown(Class<T> abilityClass) {
+        return getAbility(abilityClass).isOffCooldown(this.unit);
+    }
+
+    @Override
+    public <T extends HeroAbility> int getAbilityRank(Class<T> abilityClass) {
+        return getAbility(abilityClass).getRank(this.hero);
     }
 
     @Override

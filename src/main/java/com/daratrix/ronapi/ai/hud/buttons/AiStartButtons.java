@@ -13,8 +13,10 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 
+import static com.solegendary.reignofnether.hud.buttons.StartButtons.ICON_SIZE;
+
 public class AiStartButtons {
-    public static final int ICON_SIZE = 14;
+
     public static Button villagerStartButton = new Button(
             "[CPU] Villagers",
             ICON_SIZE,

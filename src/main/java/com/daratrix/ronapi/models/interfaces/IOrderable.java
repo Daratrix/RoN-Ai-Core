@@ -6,6 +6,7 @@
 package com.daratrix.ronapi.models.interfaces;
 
 import com.solegendary.reignofnether.ability.Ability;
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
@@ -36,15 +37,20 @@ public interface IOrderable {
 
     public Stream<Ability> getAbilities();
 
-    default public <T extends Ability> T getAbility(Class<T> abiltiyClass) {
+    default public <T extends Ability> T getAbility(Class<T> abilityClass) {
         var abilities = this.getAbilities();
-        Ability ability = abilities.filter(a -> a.getClass().isAssignableFrom(abiltiyClass.getClass())).findFirst().orElse(null);
-        if (abiltiyClass.isInstance(ability)) {
-            return abiltiyClass.cast(ability);
+        Ability ability = abilities.filter(a -> a.getClass().isAssignableFrom(abilityClass.getClass())).findFirst().orElse(null);
+        if (abilityClass.isInstance(ability)) {
+            return abilityClass.cast(ability);
         }
 
         return null;
     }
+
+    public <T extends Ability> void setAbilityAutocast(Class<T> abilityClass, boolean on);
+    public <T extends Ability> boolean isAbilityAutocasting(Class<T> abilityClass);
+    public <T extends Ability> boolean isAbilityOffCooldown(Class<T> abilityClass);
+    public <T extends HeroAbility> int getAbilityRank(Class<T> abilityClass);
 
     // mutations
     public default boolean issuePointOrder(int x, int y, int z, int orderId) {

@@ -57,6 +57,6 @@ public class ApiHero extends ApiUnit implements IHero {
     @Override
     public <T extends HeroAbility> boolean upgradeSkill(Class<T> skillAbilityClass, int level) {
         var ability = this.getAbility(skillAbilityClass);
-        return ability.rankUp();
+        return ability.rankUp(this.hero);
     }
 }

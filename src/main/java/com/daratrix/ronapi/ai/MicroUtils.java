@@ -11,6 +11,7 @@ import com.daratrix.ronapi.models.interfaces.IUnit;
 import com.daratrix.ronapi.utils.GeometryUtils;
 import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.*;
+import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
@@ -67,22 +68,21 @@ public class MicroUtils {
 
     public static void enableAutocastAbilities(IPlayerWidget u) {
         if (u.is(TypeIds.Villagers.Witch)) {
-            u.getAbility(ThrowLingeringRegenPotion.class).setAutocast(true);
-            u.getAbility(ThrowWaterPotion.class).setAutocast(true);
+            u.setAbilityAutocast(ThrowLingeringRegenPotion.class, true);
+            u.setAbilityAutocast(ThrowWaterPotion.class, true);
         }
 
         if (u.is(TypeIds.Villagers.Evoker)) {
-            u.getAbility(CastSummonVexes.class).setAutocast(true);
+            u.setAbilityAutocast(CastSummonVexes.class, true);
         }
 
         if (u.isAnyOf(TypeIds.Monsters.Spider, TypeIds.Monsters.PoisonSpider)) {
-            u.getAbility(SpinWebs.class).setAutocast(true);
+            u.setAbilityAutocast(SpinWebs.class, true);
         }
     }
 
     public static void microRavager(IPlayerWidget unit) {
-        var roarAbility = unit.getAbility(Roar.class);
-        if (!roarAbility.isOffCooldown()) {
+        if (!unit.isAbilityOffCooldown(Roar.class)) {
             return;
         }
 
@@ -102,29 +102,25 @@ public class MicroUtils {
             return;
         }
 
-        var maceAbility = unit.getAbility(MaceSlam.class);
-        if (maceAbility.rank > 0 && maceAbility.isOffCooldown() && GeometryUtils.isWithinDistance(unit, entityTarget, 4)) {
+        if (unit.getAbilityRank(MaceSlam.class) > 0 && unit.isAbilityOffCooldown(MaceSlam.class) && GeometryUtils.isWithinDistance(unit, entityTarget, 4)) {
             unit.issueWidgetOrder(entityTarget, TypeIds.Orders.MaceSlam);
             return;
         }
 
         boolean hasLowHealth = unit.getHealth() < unit.getMaxHealth() * 0.5; // <50%
-        var tauntAbility = unit.getAbility(TauntingCry.class);
-        if (tauntAbility.rank > 0 && !hasLowHealth && tauntAbility.isOffCooldown() && GeometryUtils.isWithinDistance(unit, entityTarget, 6)) {
+        if (unit.getAbilityRank(TauntingCry.class) > 0 && !hasLowHealth && unit.isAbilityOffCooldown(TauntingCry.class) && GeometryUtils.isWithinDistance(unit, entityTarget, 6)) {
             unit.issueOrder(TypeIds.Orders.Taunt);
             return;
         }
 
-        var avatarAbility = unit.getAbility(Avatar.class);
-        if (avatarAbility.rank > 0 && avatarAbility.isOffCooldown() && GeometryUtils.isWithinDistance(unit, entityTarget, 8)) {
+        if (unit.getAbilityRank(Avatar.class) > 0 && unit.isAbilityOffCooldown(Avatar.class) && GeometryUtils.isWithinDistance(unit, entityTarget, 8)) {
             unit.issueOrder(TypeIds.Orders.Avatar);
             return;
         }
     }
 
     public static void microWarden(IPlayerWidget unit) {
-        var sonicBoomAbility = unit.getAbility(SonicBoom.class);
-        if (!sonicBoomAbility.isOffCooldown()) {
+        if (!unit.isAbilityOffCooldown(SonicBoom.class)) {
             return;
         }
 
@@ -146,71 +142,62 @@ public class MicroUtils {
                 ? e
                 : null;
 
-        var siphonAbility = unit.getAbility(SoulSiphonPassive.class);
-
-        var raiseDeadAbility = unit.getAbility(RaiseDead.class);
-        if (raiseDeadAbility.rank > 0 && entityTarget != null && raiseDeadAbility.isOffCooldown() && GeometryUtils.isWithinDistance(unit, entityTarget, 10)) {
-            siphonAbility.setAutocast(true); // always boost Raise Dead
+        if (unit.getAbilityRank(RaiseDead.class) > 0 && entityTarget != null && unit.isAbilityOffCooldown(RaiseDead.class) && GeometryUtils.isWithinDistance(unit, entityTarget, 10)) {
+            unit.setAbilityAutocast(SoulSiphonPassive.class, true); // always boost Raise Dead
             unit.issueOrder(TypeIds.Orders.RaiseDead);
             return;
         }
 
-        var insomniaAbility = unit.getAbility(InsomniaCurse.class);
-        if (insomniaAbility.rank > 0 && entityTarget != null && insomniaAbility.isOffCooldown() && GeometryUtils.isWithinDistance(unit, entityTarget, 12)) {
-            siphonAbility.setAutocast(false); // always boost Insomnia
+        if (unit.getAbilityRank(InsomniaCurse.class) > 0 && entityTarget != null && unit.isAbilityOffCooldown(InsomniaCurse.class) && GeometryUtils.isWithinDistance(unit, entityTarget, 12)) {
+            unit.setAbilityAutocast(SoulSiphonPassive.class, true); // always boost Raise Dead
             unit.issueWidgetOrder(entityTarget, TypeIds.Orders.InsomniaCurse);
             return;
         }
 
         // just spam the ultimate kekw
-        var bloodMoonAbility = unit.getAbility(InsomniaCurse.class);
-        if (bloodMoonAbility.rank > 0 && bloodMoonAbility.isOffCooldown()) {
-            siphonAbility.setAutocast(false); // never boost Blood Moon
+        if (unit.getAbilityRank(BloodMoon.class) > 0 && unit.isAbilityOffCooldown(BloodMoon.class)) {
+            unit.setAbilityAutocast(SoulSiphonPassive.class, true); // always boost Raise Dead
             unit.issueOrder(TypeIds.Orders.BloodMoon);
             return;
         }
     }
 
     public static void microBrute(IPlayerWidget unit) {
-        var shieldAbility = unit.getAbility(ToggleShield.class);
-        var bloodlustAbility = unit.getAbility(Bloodlust.class);
         var canShield = ResearchServerEvents.playerHasResearch(unit.getOwnerName(), ProductionItems.RESEARCH_BRUTE_SHIELDS);
         var canBloodlust = ResearchServerEvents.playerHasResearch(unit.getOwnerName(), ProductionItems.RESEARCH_BLOODLUST)
                 && unit.getHealth() > unit.getMaxHealth() / 2; // only cast bloodlust when over 50% health
 
         var target = unit.getAttackTarget();
         if (target instanceof LivingEntity e && (!(target instanceof Unit u) || !u.getOwnerName().equals(unit.getOwnerName())) && GeometryUtils.isWithinDistance(unit, e, 10)) {
-            if (canBloodlust && bloodlustAbility.isOffCooldown()) unit.issueOrder(TypeIds.Orders.BloodLust);
+            if (canBloodlust && unit.isAbilityOffCooldown(Bloodlust.class)) unit.issueOrder(TypeIds.Orders.BloodLust);
             if (target instanceof RangedAttackerUnit) {
-                if (canShield && !shieldAbility.isAutocasting()) unit.issueOrder(TypeIds.Orders.ShieldOn);
+                if (canShield && !unit.isAbilityAutocasting(ToggleShield.class)) unit.issueOrder(TypeIds.Orders.ShieldOn);
             }
             return;
         }
 
         if (target instanceof BuildingPlacement b && !b.ownerName.equals(unit.getOwnerName())) {
-            if (canBloodlust && bloodlustAbility.isOffCooldown()) unit.issueOrder(TypeIds.Orders.BloodLust);
-            if (canShield && !shieldAbility.isAutocasting()) unit.issueOrder(TypeIds.Orders.ShieldOn);
+            if (canBloodlust && unit.isAbilityOffCooldown(Bloodlust.class)) unit.issueOrder(TypeIds.Orders.BloodLust);
+            if (canShield && !unit.isAbilityAutocasting(ToggleShield.class)) unit.issueOrder(TypeIds.Orders.ShieldOn);
             return;
         }
 
-        if (canShield && shieldAbility.isAutocasting()) unit.issueOrder(TypeIds.Orders.ShieldOff);
+        if (!canShield && unit.isAbilityAutocasting(ToggleShield.class)) unit.issueOrder(TypeIds.Orders.ShieldOff);
     }
 
     public static void microHeadhunter(IPlayerWidget unit) {
-        var bloodlustAbility = unit.getAbility(Bloodlust.class);
         var canBloodlust = ResearchServerEvents.playerHasResearch(unit.getOwnerName(), ProductionItems.RESEARCH_BLOODLUST)
                 && unit.getHealth() > unit.getMaxHealth() / 2; // only cast bloodlust when over 50% health
 
         var target = unit.getAttackTarget();
         if (target instanceof LivingEntity e && (!(target instanceof Unit u) || !u.getOwnerName().equals(unit.getOwnerName())) && GeometryUtils.isWithinDistance(unit, e, 14)) {
-            if (canBloodlust && bloodlustAbility.isOffCooldown()) unit.issueOrder(TypeIds.Orders.BloodLust);
+            if (canBloodlust && unit.isAbilityOffCooldown(Bloodlust.class)) unit.issueOrder(TypeIds.Orders.BloodLust);
             return;
         }
     }
 
     public static void microWitherSkeleton(IPlayerWidget unit) {
-        var witherCloudAbility = unit.getAbility(WitherCloud.class);
-        if (!witherCloudAbility.isOffCooldown()) {
+        if (!unit.isAbilityOffCooldown(WitherCloud.class)) {
             return;
         }
 
@@ -228,33 +215,28 @@ public class MicroUtils {
                 : null;
 
         // control greedisgood before casting any other ability
-
         var player = WorldApi.getSingleton().players.get(unit.getOwnerName());
         boolean highFood = player.getFood() > 500;
         boolean highWood = player.getWood() > 500;
         boolean highOre = player.getOre() > 500;
-        var greedAbility = unit.getAbility(GreedIsGoodPassive.class);
 
-        var tntAbility = unit.getAbility(ThrowTNT.class);
-        if (tntAbility.rank > 0 && tntAbility.isOffCooldown() && entityTarget != null && GeometryUtils.isWithinDistance(unit, entityTarget, 20)) {
-            greedAbility.setAutocast(highWood);
+        if (unit.getAbilityRank(ThrowTNT.class) > 0 && unit.isAbilityOffCooldown(ThrowTNT.class) && entityTarget != null && GeometryUtils.isWithinDistance(unit, entityTarget, 20)) {
+            unit.setAbilityAutocast(GreedIsGoodPassive.class, highWood);
             unit.issueWidgetOrder(entityTarget, TypeIds.Orders.ThrowTnt);
             return;
         }
 
         boolean hasLowHealth = unit.getHealth() < unit.getMaxHealth() * 0.5; // <50%
-        var feastAbility = unit.getAbility(FancyFeast.class);
-        if (feastAbility.rank > 0 && feastAbility.isOffCooldown() && hasLowHealth) {
-            greedAbility.setAutocast(highFood);
+        if (unit.getAbilityRank(FancyFeast.class) > 0 && unit.isAbilityOffCooldown(FancyFeast.class) && hasLowHealth) {
+            unit.setAbilityAutocast(GreedIsGoodPassive.class, highFood);
             unit.issuePointOrder(unit.getPos(), TypeIds.Orders.FancyFeast);
             return;
         }
 
         // just spam the ultimate kekw
         boolean hasHighMana = unit.getMana() > unit.getMaxMana() * 0.5; // >50%
-        var lootAbility = unit.getAbility(LootExplosion.class);
-        if (lootAbility.rank > 0 && lootAbility.isOffCooldown() && hasHighMana) {
-            greedAbility.setAutocast(highOre);
+        if (unit.getAbilityRank(LootExplosion.class) > 0 && unit.isAbilityOffCooldown(LootExplosion.class) && hasHighMana) {
+            unit.setAbilityAutocast(GreedIsGoodPassive.class, highOre);
             unit.issueOrder(TypeIds.Orders.LootExplosion);
             return;
         }

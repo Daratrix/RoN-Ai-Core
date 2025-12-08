@@ -14,6 +14,7 @@ import com.daratrix.ronapi.models.interfaces.IUnit;
 import com.daratrix.ronapi.models.interfaces.IWidget;
 import com.daratrix.ronapi.utils.GeometryUtils;
 import com.solegendary.reignofnether.ability.Ability;
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.building.GarrisonableBuilding;
@@ -205,6 +206,26 @@ public class ApiBuilding implements IBuilding {
     }
 
     @Override
+    public <T extends Ability> void setAbilityAutocast(Class<T> abilityClass, boolean on) {
+        getAbility(abilityClass).setAutocast(on, this.physicalBuilding);
+    }
+
+    @Override
+    public <T extends Ability> boolean isAbilityAutocasting(Class<T> abilityClass) {
+        return getAbility(abilityClass).isAutocasting(this.physicalBuilding);
+    }
+
+    @Override
+    public <T extends Ability> boolean isAbilityOffCooldown(Class<T> abilityClass) {
+        return getAbility(abilityClass).isOffCooldown(this.physicalBuilding);
+    }
+
+    @Override
+    public <T extends HeroAbility> int getAbilityRank(Class<T> abilityClass) {
+        return 0; // buildings don't have hero abilities, as of now
+    }
+
+    @Override
     public boolean issuePointOrder(int x, int y, int z, int orderId) {
         return false;
     }
@@ -246,7 +267,7 @@ public class ApiBuilding implements IBuilding {
             return false;
         }
 
-        return this.production.startProductionItem(production, this.physicalBuilding.originPos);
+        return this.production.startProductionItem(production);
     }
 
     @Override
@@ -260,7 +281,7 @@ public class ApiBuilding implements IBuilding {
             return false;
         }
 
-        return this.production.startProductionItem(production, this.physicalBuilding.originPos);
+        return this.production.startProductionItem(production);
     }
 
     @Override
