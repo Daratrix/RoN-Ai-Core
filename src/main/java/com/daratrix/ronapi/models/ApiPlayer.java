@@ -5,6 +5,7 @@ import com.daratrix.ronapi.models.interfaces.IBuilding;
 import com.daratrix.ronapi.models.interfaces.IPlayer;
 import com.daratrix.ronapi.models.interfaces.IUnit;
 import com.daratrix.ronapi.utils.GeometryUtils;
+import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitClientEvents;
@@ -140,6 +141,11 @@ public class ApiPlayer implements IPlayer {
         return this.resources.food >= cost.food
                 && this.resources.wood >= cost.wood
                 && this.resources.ore >= cost.ore;
+    }
+
+    @Override
+    public boolean isDefeated() {
+        return !PlayerServerEvents.rtsPlayers.contains(this.player);
     }
 
     @Override

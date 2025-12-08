@@ -38,6 +38,8 @@ public interface IPlayer {
     boolean canAfford(int typeId);
     boolean canAfford(ResourceCost cost);
 
+    boolean isDefeated();
+
     public Stream<IUnit> getUnitsFiltered(Predicate<IUnit> predicate);
     public Stream<IBuilding> getBuildingsFiltered(Predicate<IBuilding> predicate);
     public Stream<ApiPlayerBase> getBasesFiltered(Predicate<ApiPlayerBase> predicate);

@@ -208,11 +208,15 @@ public class WorldApi {
     }
 
     public static Stream<IPlayer> getPlayerEnemies(IPlayer p) {
-        return singleton.players.values().stream().filter(x -> x != p && !AlliancesServerEvents.isAllied(x.getName(), p.getName())).map(x -> (IPlayer) x);
+        return singleton.players.values().stream()
+                .filter(x -> x != p && !x.isDefeated() && !AlliancesServerEvents.isAllied(x.getName(), p.getName()))
+                .map(x -> (IPlayer) x);
     }
 
     public static Stream<IPlayer> getPlayerEnemies(String playerName) {
-        return singleton.players.values().stream().filter(x -> !Objects.equals(x.getName(), playerName) && !AlliancesServerEvents.isAllied(x.getName(), playerName)).map(x -> x);
+        return singleton.players.values().stream()
+                .filter(x -> !Objects.equals(x.getName(), playerName) && !x.isDefeated() && !AlliancesServerEvents.isAllied(x.getName(), playerName))
+                .map(x -> x);
     }
 
     public static IPlayer getPlayer(String playerName) {
