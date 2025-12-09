@@ -25,6 +25,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
+import static com.solegendary.reignofnether.hud.buttons.StartButtons.ICON_SIZE;
+
 public class AiHudClientEvents {
 
     private static final Minecraft MC = Minecraft.getInstance();
@@ -56,22 +58,22 @@ public class AiHudClientEvents {
         if (!PlayerClientEvents.rtsLocked) {
             if (!AiStartButtons.villagerStartButton.isHidden.get()) {
                 AiStartButtons.villagerStartButton.render(evt.getGuiGraphics(),
-                        screenWidth - (AiStartButtons.ICON_SIZE * 6),
-                        AiStartButtons.ICON_SIZE * 2 + AiStartButtons.ICON_SIZE / 2,
+                        screenWidth - (ICON_SIZE * 6),
+                        ICON_SIZE * 2 + ICON_SIZE / 2,
                         mouseX, mouseY);
                 renderedButtons.add(AiStartButtons.villagerStartButton);
             }
             if (!AiStartButtons.monsterStartButton.isHidden.get()) {
                 AiStartButtons.monsterStartButton.render(evt.getGuiGraphics(),
-                        (int) (screenWidth - (AiStartButtons.ICON_SIZE * 4f)),
-                        AiStartButtons.ICON_SIZE * 2 + AiStartButtons.ICON_SIZE / 2,
+                        (int) (screenWidth - (ICON_SIZE * 4f)),
+                        ICON_SIZE * 2 + ICON_SIZE / 2,
                         mouseX, mouseY);
                 renderedButtons.add(AiStartButtons.monsterStartButton);
             }
             if (!AiStartButtons.piglinStartButton.isHidden.get()) {
                 AiStartButtons.piglinStartButton.render(evt.getGuiGraphics(),
-                        screenWidth - (AiStartButtons.ICON_SIZE * 2),
-                        AiStartButtons.ICON_SIZE * 2 + AiStartButtons.ICON_SIZE / 2,
+                        screenWidth - (ICON_SIZE * 2),
+                        ICON_SIZE * 2 + ICON_SIZE / 2,
                         mouseX, mouseY);
                 renderedButtons.add(AiStartButtons.piglinStartButton);
             }

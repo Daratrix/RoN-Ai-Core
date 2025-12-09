@@ -5,6 +5,7 @@ import com.daratrix.ronapi.ai.controller.AiLogics;
 import com.daratrix.ronapi.ai.player.interfaces.IAiPlayer;
 import com.daratrix.ronapi.ai.registers.AiGameRuleRegister;
 import com.daratrix.ronapi.apis.WorldApi;
+import com.solegendary.reignofnether.player.PlayerClientboundPacket;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.player.RTSPlayer;
 import com.solegendary.reignofnether.research.ResearchClientboundPacket;
@@ -25,6 +26,7 @@ public class AiPlayerServerEvents {
         var aiPlayerName = name + id;
         PlayerServerEvents.startRTSBot(aiPlayerName, pos, faction);
         var rtsPlayer = PlayerServerEvents.rtsPlayers.stream().filter(p -> p.id == id).findFirst().get();
+        PlayerClientboundPacket.addRTSPlayer(rtsPlayer.name, rtsPlayer.faction, (long) rtsPlayer.id, rtsPlayer.startPosColorId);
         System.out.println("Creating new AI agent " + rtsPlayer.name);
         var controller = createAiPlayer(server, rtsPlayer, name);
         WorldApi.getSingleton().track(server, (AiPlayer) controller.player);
