@@ -1,7 +1,7 @@
 package com.daratrix.ronapi.ai.controller;
 
 import com.daratrix.ronapi.ai.controller.interfaces.IAiLogic;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.faction.Faction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

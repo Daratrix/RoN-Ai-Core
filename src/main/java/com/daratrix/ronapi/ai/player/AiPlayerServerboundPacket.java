@@ -3,7 +3,7 @@ package com.daratrix.ronapi.ai.player;
 import com.daratrix.ronapi.ai.registers.AiPacketHandler;
 import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.player.PlayerAction;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

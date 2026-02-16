@@ -9,11 +9,11 @@ import com.daratrix.ronapi.ai.priorities.AiHarvestPriorities;
 import com.daratrix.ronapi.ai.priorities.AiProductionPriorities;
 import com.daratrix.ronapi.apis.TypeIds;
 import com.daratrix.ronapi.models.interfaces.IHero;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.ability.heroAbilities.necromancer.BloodMoon;
+import com.solegendary.reignofnether.ability.heroAbilities.necromancer.InsomniaCurse;
+import com.solegendary.reignofnether.ability.heroAbilities.necromancer.RaiseDead;
+import com.solegendary.reignofnether.ability.heroAbilities.necromancer.SoulSiphonPassive;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.world.level.Level;
 
 public class MonsterScript extends IAiLogic.AbstractAiLogic {

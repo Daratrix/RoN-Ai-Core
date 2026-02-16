@@ -9,15 +9,11 @@ import com.daratrix.ronapi.apis.TypeIds;
 import com.daratrix.ronapi.ai.priorities.AiProductionPriorities;
 import com.daratrix.ronapi.ai.player.interfaces.IAiPlayer;
 import com.daratrix.ronapi.models.interfaces.IHero;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.FancyFeast;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.GreedIsGoodPassive;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.LootExplosion;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.ThrowTNT;
-import com.solegendary.reignofnether.ability.heroAbilities.villager.Avatar;
-import com.solegendary.reignofnether.ability.heroAbilities.villager.BattleRagePassive;
-import com.solegendary.reignofnether.ability.heroAbilities.villager.MaceSlam;
-import com.solegendary.reignofnether.ability.heroAbilities.villager.TauntingCry;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.ability.heroAbilities.royalguard.Avatar;
+import com.solegendary.reignofnether.ability.heroAbilities.royalguard.BattleRagePassive;
+import com.solegendary.reignofnether.ability.heroAbilities.royalguard.MaceSlam;
+import com.solegendary.reignofnether.ability.heroAbilities.royalguard.TauntingCry;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.world.level.Level;
 
 public class VillagerScript extends IAiLogic.AbstractAiLogic {

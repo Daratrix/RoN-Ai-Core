@@ -9,15 +9,11 @@ import com.daratrix.ronapi.ai.priorities.AiHarvestPriorities;
 import com.daratrix.ronapi.ai.priorities.AiProductionPriorities;
 import com.daratrix.ronapi.apis.TypeIds;
 import com.daratrix.ronapi.models.interfaces.IHero;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
-import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.FancyFeast;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.GreedIsGoodPassive;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.LootExplosion;
-import com.solegendary.reignofnether.ability.heroAbilities.piglin.ThrowTNT;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.ability.heroAbilities.piglinmerchant.FancyFeast;
+import com.solegendary.reignofnether.ability.heroAbilities.piglinmerchant.GreedIsGoodPassive;
+import com.solegendary.reignofnether.ability.heroAbilities.piglinmerchant.LootExplosion;
+import com.solegendary.reignofnether.ability.heroAbilities.piglinmerchant.ThrowTNT;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.world.level.Level;
 
 public class PiglinScript extends IAiLogic.AbstractAiLogic {

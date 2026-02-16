@@ -12,7 +12,7 @@ import com.solegendary.reignofnether.research.ResearchClientboundPacket;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.resources.Resources;
 import com.solegendary.reignofnether.resources.ResourcesServerEvents;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.phys.Vec3;

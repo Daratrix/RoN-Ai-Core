@@ -6,7 +6,7 @@ import com.daratrix.ronapi.apis.WorldApi;
 import com.daratrix.ronapi.models.interfaces.IHero;
 import com.daratrix.ronapi.models.interfaces.IPlayer;
 import com.daratrix.ronapi.models.interfaces.IPlayerWidget;
-import com.solegendary.reignofnether.util.Faction;
+import com.solegendary.reignofnether.faction.Faction;
 import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
