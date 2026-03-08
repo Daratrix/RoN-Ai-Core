@@ -3,6 +3,7 @@ package com.daratrix.ronapi.cursor;
 import com.daratrix.ronapi.ai.registers.AiGameRuleRegister;
 import com.daratrix.ronapi.apis.WorldApi;
 import com.daratrix.ronapi.registers.GameRuleRegister;
+import com.daratrix.ronapi.utils.RenderingUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.building.BuildingUtils;
@@ -13,6 +14,7 @@ import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -100,7 +102,7 @@ public class CursorClientEvents {
 
         if (highligthedResource != null) {
             //AABB box = new AABB(highligthedResource.getMinPos(), highligthedResource.getMaxPos());
-            MyRenderer.drawLineBoxOutlineOnly(poseStack, highligthedResource.getBoundingBox(), 1, 1, 0, 0.5f, false);
+            //MyRenderer.drawLineBoxOutlineOnly(poseStack, RenderingUtils.TranslucentVertexConsumer, highligthedResource.getBoundingBox(), 1, 1, 0, 0.5f, false);
             //MyRenderer.drawLineBoxOutlineOnly(poseStack, highligthedResource.getBoundingBox(), 1, 1, 0, 0.5f, false);
             //for(var block: highligthedResource.getBlocks().toList()) {
             //    MyRenderer.drawBlockOutline(poseStack, block, 1);

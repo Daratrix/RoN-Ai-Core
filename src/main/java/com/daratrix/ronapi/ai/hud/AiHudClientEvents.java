@@ -7,6 +7,7 @@ import com.daratrix.ronapi.models.ApiResource;
 import com.daratrix.ronapi.models.interfaces.IBuilding;
 import com.daratrix.ronapi.models.interfaces.IPlayer;
 import com.daratrix.ronapi.models.interfaces.IResource;
+import com.daratrix.ronapi.utils.RenderingUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.guiscreen.TopdownGui;
@@ -17,7 +18,9 @@ import com.solegendary.reignofnether.player.PlayerClientEvents;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -110,11 +113,11 @@ public class AiHudClientEvents {
         for (IPlayer p : WorldApi.getSingleton().players.values()) {
             p.getBasesFiltered(b -> true).forEach(b -> {
                 if (b.getThreatPower() > 10) {
-                    MyRenderer.drawLineBoxOutlineOnly(poseStack, b.getBoundingBox(), 1, 0, 0, 1, false);
+                    MyRenderer.drawLineBoxOutlineOnly(poseStack, RenderingUtils.TranslucentVertexConsumer, b.getBoundingBox(), 1, 0, 0, 1, false);
                 } else if (b.getThreatPower() > 0) {
-                    MyRenderer.drawLineBoxOutlineOnly(poseStack, b.getBoundingBox(), 1, 1, 0, 0.66f, false);
+                    MyRenderer.drawLineBoxOutlineOnly(poseStack, RenderingUtils.TranslucentVertexConsumer, b.getBoundingBox(), 1, 1, 0, 0.66f, false);
                 } else {
-                    MyRenderer.drawLineBoxOutlineOnly(poseStack, b.getBoundingBox(), 1, 1, 1, 0.33f, false);
+                    MyRenderer.drawLineBoxOutlineOnly(poseStack, RenderingUtils.TranslucentVertexConsumer, b.getBoundingBox(), 1, 1, 1, 0.33f, false);
                 }
             });
         }

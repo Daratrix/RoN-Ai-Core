@@ -10,6 +10,7 @@ import com.daratrix.ronapi.ai.scripts.PiglinScript;
 import com.daratrix.ronapi.ai.scripts.VillagerScript;
 import com.daratrix.ronapi.apis.TypeIds;
 import com.daratrix.ronapi.apis.WorldApi;
+import com.daratrix.ronapi.utils.RenderingUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.guiscreen.TopdownGui;
@@ -21,6 +22,7 @@ import com.solegendary.reignofnether.faction.Faction;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -116,14 +118,17 @@ public class AiCursorClientEvents {
 
     @SubscribeEvent
     public static void onRenderLevel(RenderLevelStageEvent evt) {
-        if (MC.level == null || !AiGameRuleRegister.showDebug(MC.getSingleplayerServer())) {
+        if (MC.level == null) {
             return;
         }
 
         if (leftClickAction != null) {
             PoseStack poseStack = evt.getPoseStack();
             var highlightedPos = CursorClientEvents.getPreselectedBlockPos();
-            MyRenderer.drawBlockFace(poseStack, Direction.UP, highlightedPos, 1, 1, 1, 1);
+            MyRenderer.drawBlockFace(poseStack, RenderingUtils.TranslucentVertexConsumer, Direction.UP, highlightedPos, 1, 1, 1, 1);
+        }
+        if (!AiGameRuleRegister.showDebug(MC.getSingleplayerServer())) {
+            return;
         }
     }
 
